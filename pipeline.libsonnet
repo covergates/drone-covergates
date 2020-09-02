@@ -67,6 +67,9 @@
           spec: 'docker/manifest.tmpl',
           ignore_missing: true,
         },
+        when: {
+          event: [ 'tag' ],
+        },
       }
     ],
     depends_on: depends_on,

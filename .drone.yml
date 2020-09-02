@@ -63,6 +63,9 @@ steps:
     spec: docker/manifest.tmpl
     username:
       from_secret: docker_username
+  when:
+    event:
+    - tag
 
 trigger:
   ref:
@@ -74,6 +77,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: ac2006ba99585a51d79e057e2b3257ccc4283c89f98ce4b8f4039ecb7ccc98c1
+hmac: d7d79a0a8eba09fb6dd095d796d6ebc198602d5b6338ad2e98ade52974a9cc33
 
 ...
