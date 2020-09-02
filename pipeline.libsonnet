@@ -37,6 +37,9 @@
           username: { 'from_secret': 'docker_username' },
           password: { 'from_secret': 'docker_password' },
         },
+        when: {
+          event: [ 'tag' ],
+        },
       },
     ],
     trigger: {
@@ -63,9 +66,6 @@
           password: { from_secret: 'docker_password' },
           spec: 'docker/manifest.tmpl',
           ignore_missing: true,
-        },
-        when: {
-          event: [ 'tag' ],
         },
       }
     ],

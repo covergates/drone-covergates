@@ -35,6 +35,9 @@ steps:
     repo: covergates/drone-covergates
     username:
       from_secret: docker_username
+  when:
+    event:
+    - tag
 
 trigger:
   ref:
@@ -60,9 +63,6 @@ steps:
     spec: docker/manifest.tmpl
     username:
       from_secret: docker_username
-  when:
-    event:
-    - tag
 
 trigger:
   ref:
@@ -74,6 +74,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: f90e2ac2ec03e2892ee836a2c6b1a360c785ca44d85acf54b0ffc43f6d2f4f62
+hmac: ac2006ba99585a51d79e057e2b3257ccc4283c89f98ce4b8f4039ecb7ccc98c1
 
 ...
