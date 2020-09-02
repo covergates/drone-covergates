@@ -1,0 +1,78 @@
+---
+kind: pipeline
+name: linux-amd64
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: dryrun
+  pull: always
+  image: plugins/docker:linux-amd64
+  settings:
+    cache_from: covergates/drone-covergates
+    dockerfile: docker/Dockerfile.linux.amd64
+    dry_run: true
+    repo: covergates/drone-covergates
+    tags: linux-amd64
+  when:
+    event:
+    - push
+
+- name: publish
+  pull: always
+  image: plugins/docker:linux-amd64
+  settings:
+    auto_tag: true
+    auto_tag_suffix: linux-amd64
+    cache_from: covergates/drone-covergates
+    daemon_off: false
+    dockerfile: docker/Dockerfile.linux.amd64
+    password:
+      from_secret: docker_password
+    repo: covergates/drone-covergates
+    username:
+      from_secret: docker_username
+  when:
+    event:
+    - tag
+
+trigger:
+  ref:
+  - refs/heads/master
+  - refs/tags/**
+
+---
+kind: pipeline
+name: notifications
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: manifest
+  pull: always
+  image: plugins/manifest
+  settings:
+    ignore_missing: true
+    password:
+      from_secret: docker_password
+    spec: docker/manifest.tmpl
+    username:
+      from_secret: docker_username
+
+trigger:
+  ref:
+  - refs/heads/master
+  - refs/tags/**
+
+depends_on:
+- linux-amd64
+
+---
+kind: signature
+hmac: 4b6935ddaaa346fa282e96afdd758048cce8a81ac7264c5a4bb819395aac1bd0
+
+...

@@ -1,0 +1,16 @@
+FROM plugins/base:linux-amd64
+
+LABEL maintainer="Covergates <covergates@gmail.com>" \
+  org.label-schema.name="Drone Covergates Plugin" \
+  org.label-schema.vendor="covergates" \
+  org.label-schema.schema-version="1.0"
+RUN apk add --update nodejs npm
+RUN mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
+RUN addgroup -S node && adduser -S node -G node
+USER node
+ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
+ENV PATH=$PATH:/home/node/.npm-global/bin
+WORKDIR /home/node
+RUN npm install -g covergates
+COPY entrypoint.sh .
+ENTRYPOINT ["sh", "/home/node/entrypoint.sh"]
