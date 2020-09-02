@@ -20,7 +20,7 @@
           cache_from: 'covergates/' + name,
         },
         when: {
-          event: [ 'push' ],
+          event: [ 'push', 'tag' ],
         },
       },
       {

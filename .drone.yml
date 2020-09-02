@@ -19,6 +19,7 @@ steps:
   when:
     event:
     - push
+    - tag
 
 - name: publish
   pull: always
@@ -76,6 +77,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: 0deeb89eb8faf60724fa53e53e324535cc3a7912bbb8fb22acca61d57d9c2460
+hmac: d7d79a0a8eba09fb6dd095d796d6ebc198602d5b6338ad2e98ade52974a9cc33
 
 ...
