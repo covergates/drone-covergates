@@ -35,9 +35,6 @@ steps:
     repo: covergates/drone-covergates
     username:
       from_secret: docker_username
-  when:
-    event:
-    - tag
 
 trigger:
   ref:
@@ -77,6 +74,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: d7d79a0a8eba09fb6dd095d796d6ebc198602d5b6338ad2e98ade52974a9cc33
+hmac: f90e2ac2ec03e2892ee836a2c6b1a360c785ca44d85acf54b0ffc43f6d2f4f62
 
 ...
