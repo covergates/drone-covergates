@@ -70,6 +70,20 @@
         when: {
           event: [ 'tag' ],
         },
+      },
+      {
+        name: 'manifest-latest',
+        image: 'plugins/manifest',
+        pull: 'always',
+        settings: {
+          username: { from_secret: 'docker_username' },
+          password: { from_secret: 'docker_password' },
+          spec: 'docker/manifest.latest.tmpl',
+          ignore_missing: true,
+        },
+        when: {
+          event: [ 'tag' ],
+        },
       }
     ],
     depends_on: depends_on,

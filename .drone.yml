@@ -67,6 +67,20 @@ steps:
     event:
     - tag
 
+- name: manifest-latest
+  pull: always
+  image: plugins/manifest
+  settings:
+    ignore_missing: true
+    password:
+      from_secret: docker_password
+    spec: docker/manifest.latest.tmpl
+    username:
+      from_secret: docker_username
+  when:
+    event:
+    - tag
+
 trigger:
   ref:
   - refs/heads/master
@@ -77,6 +91,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: d7d79a0a8eba09fb6dd095d796d6ebc198602d5b6338ad2e98ade52974a9cc33
+hmac: ad85b25743fcc568715b1a8af52f1b968178412487c43926b7f4bedb35435b61
 
 ...
