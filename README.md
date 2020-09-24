@@ -40,4 +40,4 @@ Available arguments:
 - `type`: report type, please refer to [documents](https://docs.covergates.com/start/cli/#upload-command) for more detail
 - `comment`: set true to leave a comment on your pull request
 
-> :warning: Current version only supports Linux x64 container.
+> :warning: Current version supports Linux x64, ARM and ARM x64 container.
