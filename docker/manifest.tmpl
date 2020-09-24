@@ -11,3 +11,17 @@ manifests:
     platform:
     architecture: amd64
     os: linux
+
+  -
+    image: covergates/drone-covergates:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}linux-arm64
+    platform:
+    architecture: arm64
+    os: linux
+    variant: v8
+
+  -
+    image: covergates/drone-covergates:{{#if build.tag}}{{trimPrefix "v" build.tag}}-{{/if}}linux-arm
+    platform:
+    architecture: arm
+    os: linux
+    variant: v7

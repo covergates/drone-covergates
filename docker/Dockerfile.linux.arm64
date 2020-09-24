@@ -1,4 +1,4 @@
-FROM plugins/base:linux-amd64
+FROM plugins/base:linux-arm64
 
 LABEL maintainer="Covergates <covergates@gmail.com>" \
   org.label-schema.name="Drone Covergates Plugin" \

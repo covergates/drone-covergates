@@ -1,10 +1,10 @@
-FROM plugins/base:linux-amd64
+FROM plugins/base:windows-amd64
 
 LABEL maintainer="Covergates <covergates@gmail.com>" \
   org.label-schema.name="Drone Covergates Plugin" \
   org.label-schema.vendor="covergates" \
   org.label-schema.schema-version="1.0"
 
-COPY release/linux/amd64/drone-covergates /bin/
+COPY release/windos/amd64/drone-covergates /drone-covergates.exe
 
-ENTRYPOINT ["/bin/drone-covergates"]
+ENTRYPOINT [ "\\drone-covergates.exe" ]

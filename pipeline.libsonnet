@@ -8,6 +8,36 @@
     },
     steps: [
       {
+        name: 'build-push',
+        image: 'golang:1.14',
+        pull: 'always',
+        environment: {
+          CGO_ENABLED: '0',
+        },
+        commands: [
+          'go build -v -a -o release/' + os + '/' + arch + '/' + name,
+        ],
+        when: {
+          event: {
+            exclude: [ 'tag' ],
+          },
+        },
+      },
+      {
+        name: 'build-tag',
+        image: 'golang:1.14',
+        pull: 'always',
+        environment: {
+          CGO_ENABLED: '0',
+        },
+        commands: [
+          'go build -v -ldflags \'-X main.Version=${DRONE_TAG##v}\' -a -o release/' + os + '/' + arch + '/' + name,
+        ],
+        when: {
+          event: [ 'tag' ],
+        },
+      },
+      {
         name: 'dryrun',
         image: 'plugins/docker:' + os + '-' + arch,
         pull: 'always',
