@@ -5,6 +5,6 @@ LABEL maintainer="Covergates <covergates@gmail.com>" \
   org.label-schema.vendor="covergates" \
   org.label-schema.schema-version="1.0"
 
-COPY release/linux/amd64/drone-covergates /bin/
+COPY release/linux/arm/drone-covergates /bin/
 
 ENTRYPOINT ["/bin/drone-covergates"]

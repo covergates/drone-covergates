@@ -7,65 +7,65 @@ platform:
   arch: amd64
 
 steps:
-- name: build-push
-  pull: always
-  image: golang:1.14
-  commands:
-  - go build -v -a -o release/linux/amd64/drone-covergates
-  environment:
-    CGO_ENABLED: 0
-  when:
-    event:
-      exclude:
-      - tag
+  - name: build-push
+    pull: always
+    image: golang:1.14
+    commands:
+      - go build -v -a -o release/linux/amd64/drone-covergates
+    environment:
+      CGO_ENABLED: 0
+    when:
+      event:
+        exclude:
+          - tag
 
-- name: build-tag
-  pull: always
-  image: golang:1.14
-  commands:
-  - go build -v -ldflags '-X main.Version=${DRONE_TAG##v}' -a -o release/linux/amd64/drone-covergates
-  environment:
-    CGO_ENABLED: 0
-  when:
-    event:
-    - tag
+  - name: build-tag
+    pull: always
+    image: golang:1.14
+    commands:
+      - go build -v -ldflags '-X main.Version=${DRONE_TAG##v}' -a -o release/linux/amd64/drone-covergates
+    environment:
+      CGO_ENABLED: 0
+    when:
+      event:
+        - tag
 
-- name: dryrun
-  pull: always
-  image: plugins/docker:linux-amd64
-  settings:
-    cache_from: covergates/drone-covergates
-    dockerfile: docker/Dockerfile.linux.amd64
-    dry_run: true
-    repo: covergates/drone-covergates
-    tags: linux-amd64
-  when:
-    event:
-    - push
-    - tag
+  - name: dryrun
+    pull: always
+    image: plugins/docker:linux-amd64
+    settings:
+      cache_from: covergates/drone-covergates
+      dockerfile: docker/Dockerfile.linux.amd64
+      dry_run: true
+      repo: covergates/drone-covergates
+      tags: linux-amd64
+    when:
+      event:
+        - push
+        - tag
 
-- name: publish
-  pull: always
-  image: plugins/docker:linux-amd64
-  settings:
-    auto_tag: true
-    auto_tag_suffix: linux-amd64
-    cache_from: covergates/drone-covergates
-    daemon_off: false
-    dockerfile: docker/Dockerfile.linux.amd64
-    password:
-      from_secret: docker_password
-    repo: covergates/drone-covergates
-    username:
-      from_secret: docker_username
-  when:
-    event:
-    - tag
+  - name: publish
+    pull: always
+    image: plugins/docker:linux-amd64
+    settings:
+      auto_tag: true
+      auto_tag_suffix: linux-amd64
+      cache_from: covergates/drone-covergates
+      daemon_off: false
+      dockerfile: docker/Dockerfile.linux.amd64
+      password:
+        from_secret: docker_password
+      repo: covergates/drone-covergates
+      username:
+        from_secret: docker_username
+    when:
+      event:
+        - tag
 
 trigger:
   ref:
-  - refs/heads/master
-  - refs/tags/**
+    - refs/heads/master
+    - refs/tags/**
 
 ---
 kind: pipeline
@@ -76,65 +76,65 @@ platform:
   arch: arm
 
 steps:
-- name: build-push
-  pull: always
-  image: golang:1.14
-  commands:
-  - go build -v -a -o release/linux/arm/drone-covergates
-  environment:
-    CGO_ENABLED: 0
-  when:
-    event:
-      exclude:
-      - tag
+  - name: build-push
+    pull: always
+    image: golang:1.14
+    commands:
+      - go build -v -a -o release/linux/arm/drone-covergates
+    environment:
+      CGO_ENABLED: 0
+    when:
+      event:
+        exclude:
+          - tag
 
-- name: build-tag
-  pull: always
-  image: golang:1.14
-  commands:
-  - go build -v -ldflags '-X main.Version=${DRONE_TAG##v}' -a -o release/linux/arm/drone-covergates
-  environment:
-    CGO_ENABLED: 0
-  when:
-    event:
-    - tag
+  - name: build-tag
+    pull: always
+    image: golang:1.14
+    commands:
+      - go build -v -ldflags '-X main.Version=${DRONE_TAG##v}' -a -o release/linux/arm/drone-covergates
+    environment:
+      CGO_ENABLED: 0
+    when:
+      event:
+        - tag
 
-- name: dryrun
-  pull: always
-  image: plugins/docker:linux-arm
-  settings:
-    cache_from: covergates/drone-covergates
-    dockerfile: docker/Dockerfile.linux.arm
-    dry_run: true
-    repo: covergates/drone-covergates
-    tags: linux-arm
-  when:
-    event:
-    - push
-    - tag
+  - name: dryrun
+    pull: always
+    image: plugins/docker:linux-arm
+    settings:
+      cache_from: covergates/drone-covergates
+      dockerfile: docker/Dockerfile.linux.arm
+      dry_run: true
+      repo: covergates/drone-covergates
+      tags: linux-arm
+    when:
+      event:
+        - push
+        - tag
 
-- name: publish
-  pull: always
-  image: plugins/docker:linux-arm
-  settings:
-    auto_tag: true
-    auto_tag_suffix: linux-arm
-    cache_from: covergates/drone-covergates
-    daemon_off: false
-    dockerfile: docker/Dockerfile.linux.arm
-    password:
-      from_secret: docker_password
-    repo: covergates/drone-covergates
-    username:
-      from_secret: docker_username
-  when:
-    event:
-    - tag
+  - name: publish
+    pull: always
+    image: plugins/docker:linux-arm
+    settings:
+      auto_tag: true
+      auto_tag_suffix: linux-arm
+      cache_from: covergates/drone-covergates
+      daemon_off: false
+      dockerfile: docker/Dockerfile.linux.arm
+      password:
+        from_secret: docker_password
+      repo: covergates/drone-covergates
+      username:
+        from_secret: docker_username
+    when:
+      event:
+        - tag
 
 trigger:
   ref:
-  - refs/heads/master
-  - refs/tags/**
+    - refs/heads/master
+    - refs/tags/**
 
 ---
 kind: pipeline
@@ -145,65 +145,65 @@ platform:
   arch: arm64
 
 steps:
-- name: build-push
-  pull: always
-  image: golang:1.14
-  commands:
-  - go build -v -a -o release/linux/arm64/drone-covergates
-  environment:
-    CGO_ENABLED: 0
-  when:
-    event:
-      exclude:
-      - tag
+  - name: build-push
+    pull: always
+    image: golang:1.14
+    commands:
+      - go build -v -a -o release/linux/arm64/drone-covergates
+    environment:
+      CGO_ENABLED: 0
+    when:
+      event:
+        exclude:
+          - tag
 
-- name: build-tag
-  pull: always
-  image: golang:1.14
-  commands:
-  - go build -v -ldflags '-X main.Version=${DRONE_TAG##v}' -a -o release/linux/arm64/drone-covergates
-  environment:
-    CGO_ENABLED: 0
-  when:
-    event:
-    - tag
+  - name: build-tag
+    pull: always
+    image: golang:1.14
+    commands:
+      - go build -v -ldflags '-X main.Version=${DRONE_TAG##v}' -a -o release/linux/arm64/drone-covergates
+    environment:
+      CGO_ENABLED: 0
+    when:
+      event:
+        - tag
 
-- name: dryrun
-  pull: always
-  image: plugins/docker:linux-arm64
-  settings:
-    cache_from: covergates/drone-covergates
-    dockerfile: docker/Dockerfile.linux.arm64
-    dry_run: true
-    repo: covergates/drone-covergates
-    tags: linux-arm64
-  when:
-    event:
-    - push
-    - tag
+  - name: dryrun
+    pull: always
+    image: plugins/docker:linux-arm64
+    settings:
+      cache_from: covergates/drone-covergates
+      dockerfile: docker/Dockerfile.linux.arm64
+      dry_run: true
+      repo: covergates/drone-covergates
+      tags: linux-arm64
+    when:
+      event:
+        - push
+        - tag
 
-- name: publish
-  pull: always
-  image: plugins/docker:linux-arm64
-  settings:
-    auto_tag: true
-    auto_tag_suffix: linux-arm64
-    cache_from: covergates/drone-covergates
-    daemon_off: false
-    dockerfile: docker/Dockerfile.linux.arm64
-    password:
-      from_secret: docker_password
-    repo: covergates/drone-covergates
-    username:
-      from_secret: docker_username
-  when:
-    event:
-    - tag
+  - name: publish
+    pull: always
+    image: plugins/docker:linux-arm64
+    settings:
+      auto_tag: true
+      auto_tag_suffix: linux-arm64
+      cache_from: covergates/drone-covergates
+      daemon_off: false
+      dockerfile: docker/Dockerfile.linux.arm64
+      password:
+        from_secret: docker_password
+      repo: covergates/drone-covergates
+      username:
+        from_secret: docker_username
+    when:
+      event:
+        - tag
 
 trigger:
   ref:
-  - refs/heads/master
-  - refs/tags/**
+    - refs/heads/master
+    - refs/tags/**
 
 ---
 kind: pipeline
@@ -212,67 +212,68 @@ name: windows-amd64
 platform:
   os: windows
   arch: amd64
+  version: 1903
 
 steps:
-- name: build-push
-  pull: always
-  image: golang:1.14
-  commands:
-  - go build -v -a -o release/windows/amd64/drone-covergates
-  environment:
-    CGO_ENABLED: 0
-  when:
-    event:
-      exclude:
-      - tag
+  - name: build-push
+    pull: always
+    image: golang:1.14
+    commands:
+      - go build -v -a -o release/windows/amd64/drone-covergates
+    environment:
+      CGO_ENABLED: 0
+    when:
+      event:
+        exclude:
+          - tag
 
-- name: build-tag
-  pull: always
-  image: golang:1.14
-  commands:
-  - go build -v -ldflags '-X main.Version=${DRONE_TAG##v}' -a -o release/windows/amd64/drone-covergates
-  environment:
-    CGO_ENABLED: 0
-  when:
-    event:
-    - tag
+  - name: build-tag
+    pull: always
+    image: golang:1.14
+    commands:
+      - go build -v -ldflags '-X main.Version=${DRONE_TAG##v}' -a -o release/windows/amd64/drone-covergates
+    environment:
+      CGO_ENABLED: 0
+    when:
+      event:
+        - tag
 
-- name: dryrun
-  pull: always
-  image: plugins/docker:windows-amd64
-  settings:
-    cache_from: covergates/drone-covergates
-    dockerfile: docker/Dockerfile.windows.amd64
-    dry_run: true
-    repo: covergates/drone-covergates
-    tags: windows-amd64
-  when:
-    event:
-    - push
-    - tag
+  - name: dryrun
+    pull: always
+    image: plugins/docker:windows-amd64
+    settings:
+      cache_from: covergates/drone-covergates
+      dockerfile: docker/Dockerfile.windows.amd64
+      dry_run: true
+      repo: covergates/drone-covergates
+      tags: windows-amd64
+    when:
+      event:
+        - push
+        - tag
 
-- name: publish
-  pull: always
-  image: plugins/docker:windows-amd64
-  settings:
-    auto_tag: true
-    auto_tag_suffix: windows-amd64
-    cache_from: covergates/drone-covergates
-    daemon_off: false
-    dockerfile: docker/Dockerfile.windows.amd64
-    password:
-      from_secret: docker_password
-    repo: covergates/drone-covergates
-    username:
-      from_secret: docker_username
-  when:
-    event:
-    - tag
+  - name: publish
+    pull: always
+    image: plugins/docker:windows-amd64
+    settings:
+      auto_tag: true
+      auto_tag_suffix: windows-amd64
+      cache_from: covergates/drone-covergates
+      daemon_off: false
+      dockerfile: docker/Dockerfile.windows.amd64
+      password:
+        from_secret: docker_password
+      repo: covergates/drone-covergates
+      username:
+        from_secret: docker_username
+    when:
+      event:
+        - tag
 
 trigger:
   ref:
-  - refs/heads/master
-  - refs/tags/**
+    - refs/heads/master
+    - refs/tags/**
 
 ---
 kind: pipeline
@@ -283,46 +284,45 @@ platform:
   arch: amd64
 
 steps:
-- name: manifest
-  pull: always
-  image: plugins/manifest
-  settings:
-    ignore_missing: true
-    password:
-      from_secret: docker_password
-    spec: docker/manifest.tmpl
-    username:
-      from_secret: docker_username
-  when:
-    event:
-    - tag
+  - name: manifest
+    pull: always
+    image: plugins/manifest
+    settings:
+      ignore_missing: true
+      password:
+        from_secret: docker_password
+      spec: docker/manifest.tmpl
+      username:
+        from_secret: docker_username
+    when:
+      event:
+        - tag
 
-- name: manifest-latest
-  pull: always
-  image: plugins/manifest
-  settings:
-    ignore_missing: true
-    password:
-      from_secret: docker_password
-    spec: docker/manifest.latest.tmpl
-    username:
-      from_secret: docker_username
-  when:
-    event:
-    - tag
+  - name: manifest-latest
+    pull: always
+    image: plugins/manifest
+    settings:
+      ignore_missing: true
+      password:
+        from_secret: docker_password
+      spec: docker/manifest.latest.tmpl
+      username:
+        from_secret: docker_username
+    when:
+      event:
+        - tag
 
 trigger:
   ref:
-  - refs/heads/master
-  - refs/tags/**
+    - refs/heads/master
+    - refs/tags/**
 
 depends_on:
-- linux-amd64
-- linux-arm
-- linux-arm64
-
+  - linux-amd64
+  - linux-arm
+  - linux-arm64
 ---
 kind: signature
-hmac: f0bc76453669b811ddd758fe5a2fbc999044f98ca6f7cbdb5ada1db3b015fb1a
+hmac: edf13240867fa36e43905e330791333724bd6a35e64e46bd43aaab4e738ae7c2
 
 ...
